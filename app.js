@@ -1,5 +1,7 @@
 const express = require("express");
+const chanceImport = require("chance");
 
+const chance = chanceImport();
 const app = express();
 const bodyparser = require("body-parser");
 
@@ -36,9 +38,37 @@ app.post("/new_order", (req, res) => {
     }
   });
   
+  app.get("/test_Api", (req, res) => {
+    res.status(200).send("Success API Call");
+  });
+  //person data
+  app.get("/birthday", (req, res) => {
+    res.status(200).send(chance.birthday({string: true}));
+  });
 
+  app.get("/ssn", (req, res) => {
+    res.status(200).send(chance.ssn());
+  });
+  
+  app.get("/gender", (req, res) => {
+    res.status(200).send(chance.gender());
+  });
+  
+  app.get("/name", (req, res) => {
+    res.status(200).send(chance.name());
+  });
+  
+  app.get("/ssn", (req, res) => {
+    res.status(200).send(chance.ssn());
+  });
+
+  app.get("/list", (req, res) => {
+    res.status(200).send("[/birthday, /ssn, /gender, /name, /ssn, /test_Api]");
+  });
+  
+  
   app.get("/get_orders", (req, res) => {
-    res.status(200).send("orders");
+    res.status(200).send(orders);
   });
 
   app.patch("/order/:id", (req, res) => {
@@ -82,7 +112,7 @@ app.post("/new_order", (req, res) => {
     res.status(404).json({ message: "Invalid Order Id" });
   });
   
-
+  
 app.listen(port, () => {
   console.log(`running at port ${port}`);
 });
